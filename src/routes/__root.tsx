@@ -2,7 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { ApolloProvider } from "@apollo/client/react";
 
 import appCss from "../styles.css?url";
-import { Navbar2 } from "@/components/layout/Navbar2";
+import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MeshBackground } from "@/components/layout/MeshBackground";
 
@@ -42,7 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ApolloProvider client={apolloClient}>
           <MeshBackground />
           <div className="relative z-10 flex min-h-screen flex-col">
-            <Navbar2 />
+            <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

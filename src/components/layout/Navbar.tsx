@@ -1,181 +1,155 @@
-import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { buttonVariants } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { TextAlignJustify } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { Container } from "@/components/layout/Container";
+import ButtonHero from "@/components/ButtonHero";
 
-interface RouteProps {
+export type NavigationSection = {
+  title: string;
   href: string;
-  label: string;
-}
+};
 
-const routeList: RouteProps[] = [
+const navigationData: NavigationSection[] = [
   {
+    title: "Home",
     href: "/",
-    label: "Home",
   },
   {
+    title: "Solutions",
     href: "/solutions",
-    label: "Solutions",
   },
   {
+    title: "About Us",
     href: "/aboutUs",
-    label: "About Us",
   },
   {
+    title: "Resources",
     href: "/resources",
-    label: "Resources",
   },
   {
+    title: "Contact Us",
     href: "/contactUs",
-    label: "Contact Us",
   },
 ];
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [sticky, setSticky] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleScroll = useCallback(() => {
+    setSticky(window.scrollY >= 50);
+  }, []);
+
+  const handleResize = useCallback(() => {
+    if (window.innerWidth >= 768) setIsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleScroll, handleResize]);
+
   return (
-    <header className="sticky border-b top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
-      <div className="container h-14 px-4 mx-auto flex justify-between items-center w-full relative">
-        {/* logo */}
-        <Link
-          to="/"
-          activeOptions={{ exact: true }}
-          // activeProps={{ className: "text-primary" }}
-          className="font-extrabold text-xl flex items-center shrink-0 z-50"
-        >
-          <img src="/hisd3-logo.svg" alt="" className="h-10 w-10 mr-2" />
-          HIS<span className="text-[#ff5733]">D3</span>
-        </Link>
-
-        {/* desktop nav - absolutely centered */}
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2">
-          <NavigationMenu>
-            <NavigationMenuList className="flex gap-2">
-              {routeList.map((route: RouteProps, i) => (
-                <NavigationMenuItem key={i}>
-                  <Link
-                    to={route.href}
-                    activeProps={{ className: "text-primary" }}
-                    className={`text-[17px] ${buttonVariants({
-                      variant: "ghost",
-                    })}`}
-                  >
-                    {route.label}
-                  </Link>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-
-        {/* right side: social & mobile menu */}
-        <div className="flex items-center gap-4 z-50">
-          <div className="hidden md:flex gap-2 items-center">
-            <a
-              href="https://www.facebook.com"
-              rel="noreferrer noopener"
-              target="_blank"
-              className="opacity-60 hover:opacity-100"
+    <div className="sticky top-0 z-50">
+      <header className="bg-transparent">
+        <Container className="py-4">
+          <nav
+            className={cn(
+              "w-full flex items-center h-fit justify-between gap-3.5 lg:gap-6 transition-all duration-500",
+              sticky
+                ? "p-2.5 bg-background/60 backdrop-blur-lg border border-border/40 shadow-2xl shadow-primary/5 rounded-full"
+                : "bg-transparent border-transparent",
+            )}
+          >
+            <Link
+              to="/"
+              className="font-extrabold text-xl flex items-center shrink-0 z-50"
             >
-              <img src="/facebook.svg" alt="" className="h-5 w-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              rel="noreferrer noopener"
-              target="_blank"
-              className="opacity-60 hover:opacity-100"
-            >
-              <img src="/linkedin.svg" alt="" className="h-5 w-5" />
-            </a>
-            <a
-              href="https://www.telegram.com"
-              rel="noreferrer noopener"
-              target="_blank"
-              className="opacity-60 hover:opacity-100"
-            >
-              <img src="/telegram.svg" alt="" className="h-5 w-5" />
-            </a>
-          </div>
-
-          {/* mobile toggle */}
-          <span className="flex md:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger className="px-2">
-                <Menu
-                  className="flex h-5 w-5"
-                  onClick={() => setIsOpen(true)} /
-                >
-                <span className="sr-only">Menu Icon</span>
-
-              </SheetTrigger>
-
-              <SheetContent side={"left"}>
-                <SheetHeader>
-                  <SheetTitle className="flex items-center font-bold text-xl">
-                    <img src="/hisd3-logo.svg" alt="" className="h-8 w-8" />
-                    <div className="flex items-center ml-2">
-                      HIS<span className="text-[#ff5733]">D3</span>
-                    </div>
-                  </SheetTitle>
-                </SheetHeader>
-                <nav className="flex flex-col justify-center items-center gap-2 mt-4">
-                  {routeList.map(({ href, label }: RouteProps) => (
-                    <Link
-                      key={label}
-                      to={href}
-                      activeProps={{ className: "text-primary" }}
-                      onClick={() => setIsOpen(false)}
-                      className={buttonVariants({ variant: "ghost" })}
-                    >
-                      {label}
-                    </Link>
+              <img src="/hisd3-logo.svg" alt="" className="h-10 w-10 mr-2" />
+              HIS<span className="text-[#ff5733]">D3</span>
+            </Link>
+            <div>
+              <NavigationMenu className="max-lg:hidden bg-muted p-0.5 rounded-full">
+                <NavigationMenuList className="flex gap-0">
+                  {navigationData.map((navItem) => (
+                    <NavigationMenuItem key={navItem.title}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={navItem.href}
+                          activeProps={{
+                            className:
+                              "!bg-background !text-primary shadow-xs border border-border !rounded-full",
+                          }}
+                          className="px-2 lg:px-4 py-2 text-sm font-medium !rounded-full text-muted-foreground hover:text-primary hover:bg-background border border-transparent hover:border-border hover:shadow-xs transition tracking-normal block"
+                        >
+                          {navItem.title}
+                        </Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
                   ))}
-                  <div className="flex gap-4 mt-4">
-                    <a
-                      href="https://www.facebook.com"
-                      rel="noreferrer noopener"
-                      target="_blank"
-                      className="opacity-60 hover:opacity-100"
-                      title="Facebook"
-                    >
-                      <img
-                        src="/facebook.svg"
-                        alt="Facebook"
-                        className="h-5 w-5"
-                      />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com"
-                      rel="noreferrer noopener"
-                      target="_blank"
-                      className="opacity-60 hover:opacity-100"
-                      title="LinkedIn"
-                    >
-                      <img
-                        src="/linkedin.svg"
-                        alt="LinkedIn"
-                        className="h-5 w-5"
-                      />
-                    </a>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+
+            <Link to="/contactUs" className="hidden lg:flex">
+              {/* <CollaborateButton /> */}
+              <ButtonHero />
+            </Link>
+
+            <div className="lg:hidden">
+              <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+                <DropdownMenuTrigger className="rounded-full bg-background border border-border p-2 outline-none flex items-center justify-center cursor-pointer transition-colors">
+                  <TextAlignJustify size={20} />
+                  <span className="sr-only">Menu</span>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 mt-2 shadow-xl border-border/50 backdrop-blur-md"
+                >
+                  {navigationData.map((item) => (
+                    <DropdownMenuItem key={item.title} asChild>
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="w-full cursor-pointer text-sm font-medium px-4 py-2 hover:bg-muted rounded-md transition-colors"
+                      >
+                        {item.title}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                  <div className="p-2 border-t mt-2">
+                    <Link to="/contactUs" onClick={() => setIsOpen(false)}>
+                      <Button className="w-full rounded-full text-xs h-9">
+                        Collaborate
+                      </Button>
+                    </Link>
                   </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </span>
-        </div>
-      </div>
-    </header>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </nav>
+        </Container>
+      </header>
+    </div>
   );
 };
