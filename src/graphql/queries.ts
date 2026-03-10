@@ -1,4 +1,4 @@
-import { gql } from './generated';
+import { gql } from "./generated";
 
 export const TEST_QUERY = gql(`
   query TestConnection {
@@ -93,6 +93,19 @@ export const GET_ARTICLE_BY_ID = gql(`
       author {
         username
       }
+    }
+  }
+`);
+
+export const GET_TESTIMONIALS = gql(`
+  query GetTestimonials {
+    testimonies {
+      id
+      name
+      position
+      avatarUrl
+      company
+      content
     }
   }
 `);

@@ -45,6 +45,17 @@ export type AdminArticleEntity = {
   userId?: Maybe<Scalars['String']['output']>;
 };
 
+export type AdminGalleryEntity = {
+  __typename?: 'AdminGalleryEntity';
+  _count: GalleryCount;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  media?: Maybe<Array<Media>>;
+  status: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type AdminProductEntity = {
   __typename?: 'AdminProductEntity';
   _count: ProductCount;
@@ -230,6 +241,12 @@ export type CreateCompanyProfileInput = {
   socials?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type CreateGalleryDto = {
+  mediaIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
 export type CreateInquiryInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   hospitalOrClinic?: InputMaybe<Scalars['String']['input']>;
@@ -265,6 +282,16 @@ export type CreateTeamMemberInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
   position: Scalars['String']['input'];
   socials?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type CreateTestimonyInput = {
+  avatarUrl?: InputMaybe<Scalars['String']['input']>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['String']['input'];
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+  order?: InputMaybe<Scalars['Float']['input']>;
+  position?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateUserInput = {
@@ -321,6 +348,39 @@ export type EnumRoleNullableListFilter = {
   hasEvery?: InputMaybe<Array<Role>>;
   hasSome?: InputMaybe<Array<Role>>;
   isEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Gallery = {
+  __typename?: 'Gallery';
+  _count: GalleryCount;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  media?: Maybe<Array<Media>>;
+  status: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type GalleryCount = {
+  __typename?: 'GalleryCount';
+  media: Scalars['Int']['output'];
+};
+
+export type GalleryNullableScalarRelationFilter = {
+  is?: InputMaybe<GalleryWhereInput>;
+  isNot?: InputMaybe<GalleryWhereInput>;
+};
+
+export type GalleryWhereInput = {
+  AND?: InputMaybe<Array<GalleryWhereInput>>;
+  NOT?: InputMaybe<Array<GalleryWhereInput>>;
+  OR?: InputMaybe<Array<GalleryWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  media?: InputMaybe<MediaListRelationFilter>;
+  status?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
 export type GeneralMsg = {
@@ -402,6 +462,8 @@ export type Media = {
   createdAt: Scalars['DateTime']['output'];
   createdBy?: Maybe<Scalars['String']['output']>;
   filename: Scalars['String']['output'];
+  gallery?: Maybe<Gallery>;
+  galleryId?: Maybe<Scalars['String']['output']>;
   height?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   mimeType?: Maybe<Scalars['String']['output']>;
@@ -441,6 +503,8 @@ export type MediaWhereInput = {
   createdAt?: InputMaybe<DateTimeFilter>;
   createdBy?: InputMaybe<StringNullableFilter>;
   filename?: InputMaybe<StringFilter>;
+  gallery?: InputMaybe<GalleryNullableScalarRelationFilter>;
+  galleryId?: InputMaybe<StringNullableFilter>;
   height?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<StringFilter>;
   mimeType?: InputMaybe<StringNullableFilter>;
@@ -473,29 +537,35 @@ export type Mutation = {
   createArticle: AdminArticleEntity;
   createCategory: Category;
   createCompanyProfile: CompanyProfile;
+  createGallery: AdminGalleryEntity;
   createInquiry: Inquiry;
-  createProduct: AdminProductEntity;
+  createProduct: Product;
   createTeamMember: TeamMember;
+  createTestimony: Testimony;
   createUser: GeneralMsg;
   hardDeleteArticle: AdminArticleEntity;
   logOut: GeneralMsg;
   refreshToken: SignResponse;
   removeArticle: AdminArticleEntity;
   removeCategory: Category;
+  removeGallery: AdminGalleryEntity;
   removeInquiry: Inquiry;
-  removeProduct: AdminProductEntity;
+  removeProduct: Product;
   removeTeamMember: TeamMember;
+  removeTestimony: Testimony;
   restoreArticle: AdminArticleEntity;
   signin: SignResponse;
   signup: SignResponse;
   updateArticle: AdminArticleEntity;
   updateCategory: Category;
   updateCompanyProfile: CompanyProfile;
+  updateGallery: AdminGalleryEntity;
   updateInquiry: Inquiry;
   updateMyProfile: Profile;
-  updateProduct: AdminProductEntity;
+  updateProduct: Product;
   updateProfile: Profile;
   updateTeamMember: TeamMember;
+  updateTestimony: Testimony;
 };
 
 
@@ -519,6 +589,11 @@ export type MutationCreateCompanyProfileArgs = {
 };
 
 
+export type MutationCreateGalleryArgs = {
+  payload: CreateGalleryDto;
+};
+
+
 export type MutationCreateInquiryArgs = {
   createInquiryInput: CreateInquiryInput;
 };
@@ -531,6 +606,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateTeamMemberArgs = {
   createTeamMemberInput: CreateTeamMemberInput;
+};
+
+
+export type MutationCreateTestimonyArgs = {
+  payload: CreateTestimonyInput;
 };
 
 
@@ -554,6 +634,11 @@ export type MutationRemoveCategoryArgs = {
 };
 
 
+export type MutationRemoveGalleryArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationRemoveInquiryArgs = {
   id: Scalars['String']['input'];
 };
@@ -565,6 +650,11 @@ export type MutationRemoveProductArgs = {
 
 
 export type MutationRemoveTeamMemberArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationRemoveTestimonyArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -600,6 +690,12 @@ export type MutationUpdateCompanyProfileArgs = {
 };
 
 
+export type MutationUpdateGalleryArgs = {
+  id: Scalars['String']['input'];
+  payload: UpdateGalleryDto;
+};
+
+
 export type MutationUpdateInquiryArgs = {
   id: Scalars['String']['input'];
   updateInquiryInput: UpdateInquiryInput;
@@ -624,6 +720,12 @@ export type MutationUpdateProfileArgs = {
 export type MutationUpdateTeamMemberArgs = {
   id: Scalars['String']['input'];
   updateTeamMemberInput: UpdateTeamMemberInput;
+};
+
+
+export type MutationUpdateTestimonyArgs = {
+  id: Scalars['String']['input'];
+  payload: UpdateTestimonyInput;
 };
 
 export type NestedBoolFilter = {
@@ -857,6 +959,41 @@ export type PublicAuthorEntity = {
   username: Scalars['String']['output'];
 };
 
+export type PublicCategoryEntity = {
+  __typename?: 'PublicCategoryEntity';
+  articleCount?: Maybe<Scalars['Int']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+};
+
+export type PublicCompanyProfileEntity = {
+  __typename?: 'PublicCompanyProfileEntity';
+  address?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
+  socials?: Maybe<Scalars['JSON']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type PublicGalleryDetailEntity = {
+  __typename?: 'PublicGalleryDetailEntity';
+  id: Scalars['ID']['output'];
+  media?: Maybe<Array<Media>>;
+  title: Scalars['String']['output'];
+};
+
+export type PublicGalleryEntity = {
+  __typename?: 'PublicGalleryEntity';
+  coverImageUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
 export type PublicProductEntity = {
   __typename?: 'PublicProductEntity';
   category?: Maybe<Category>;
@@ -877,22 +1014,40 @@ export type PublicProfileEntity = {
   lastName?: Maybe<Scalars['String']['output']>;
 };
 
+export type PublicTestimonyEntity = {
+  __typename?: 'PublicTestimonyEntity';
+  avatarUrl?: Maybe<Scalars['String']['output']>;
+  company?: Maybe<Scalars['String']['output']>;
+  content: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  position?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   adminArticle?: Maybe<AdminArticleEntity>;
   adminArticles: Array<AdminArticleEntity>;
+  adminGalleries: Array<AdminGalleryEntity>;
+  adminGallery?: Maybe<AdminGalleryEntity>;
   adminProduct?: Maybe<AdminProductEntity>;
   adminProducts: Array<AdminProductEntity>;
+  adminTestimonies: Array<Testimony>;
+  adminTestimony?: Maybe<Testimony>;
   article?: Maybe<PublicArticleEntity>;
   articles: Array<PublicArticleEntity>;
-  categories: Array<Category>;
-  category: Category;
-  categoryBySlug: Category;
-  companyProfile?: Maybe<CompanyProfile>;
-  companyProfileById: CompanyProfile;
-  companyProfiles: Array<CompanyProfile>;
+  categories: Array<PublicCategoryEntity>;
+  categoriesAdmin: Array<Category>;
+  category?: Maybe<PublicCategoryEntity>;
+  categoryBySlug?: Maybe<PublicCategoryEntity>;
+  companyProfile?: Maybe<PublicCompanyProfileEntity>;
+  companyProfileById?: Maybe<PublicCompanyProfileEntity>;
+  companyProfiles: Array<PublicCompanyProfileEntity>;
   findAllUsers: UserList;
   findOneUser: Profile;
+  galleries: Array<PublicGalleryEntity>;
+  gallery?: Maybe<PublicGalleryDetailEntity>;
   inquiries: Array<Inquiry>;
   inquiry: Inquiry;
   meQuery: MeQuery;
@@ -900,6 +1055,7 @@ export type Query = {
   products: Array<PublicProductEntity>;
   teamMember: TeamMember;
   teamMembers: Array<TeamMember>;
+  testimonies: Array<PublicTestimonyEntity>;
 };
 
 
@@ -913,7 +1069,17 @@ export type QueryAdminArticlesArgs = {
 };
 
 
+export type QueryAdminGalleryArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryAdminProductArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryAdminTestimonyArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -952,6 +1118,11 @@ export type QueryFindAllUsersArgs = {
 
 export type QueryFindOneUserArgs = {
   profileId: Scalars['String']['input'];
+};
+
+
+export type QueryGalleryArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -1051,6 +1222,22 @@ export type TeamMember = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type Testimony = {
+  __typename?: 'Testimony';
+  avatarUrl?: Maybe<Scalars['String']['output']>;
+  company?: Maybe<Scalars['String']['output']>;
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  createdBy?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isActive: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  position?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  updatedBy?: Maybe<Scalars['String']['output']>;
+};
+
 export type UpdateArticleDto = {
   categoryId?: InputMaybe<Scalars['String']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
@@ -1074,9 +1261,15 @@ export type UpdateCategoryInput = {
 export type UpdateCompanyProfileInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
   phone?: InputMaybe<Scalars['String']['input']>;
   socials?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type UpdateGalleryDto = {
+  mediaIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateInquiryInput = {
@@ -1119,6 +1312,16 @@ export type UpdateTeamMemberInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
   position?: InputMaybe<Scalars['String']['input']>;
   socials?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type UpdateTestimonyInput = {
+  avatarUrl?: InputMaybe<Scalars['String']['input']>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  position?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type User = {
@@ -1400,7 +1603,7 @@ export type GetTeamMembersQuery = { __typename?: 'Query', teamMembers: Array<{ _
 export type GetArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'PublicArticleEntity', id: string, title?: string | null, slug?: string | null, excerpt?: string | null, publishedAt?: any | null, category?: { __typename?: 'Category', name: string } | null, media?: Array<{ __typename?: 'Media', url: string }> | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, slug: string }> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'PublicArticleEntity', id: string, title?: string | null, slug?: string | null, excerpt?: string | null, publishedAt?: any | null, category?: { __typename?: 'Category', name: string } | null, media?: Array<{ __typename?: 'Media', url: string }> | null }>, categories: Array<{ __typename?: 'PublicCategoryEntity', id: string, name: string, slug: string }> };
 
 export type ArticleQueryVariables = Exact<{
   articleId: Scalars['String']['input'];
@@ -1408,6 +1611,11 @@ export type ArticleQueryVariables = Exact<{
 
 
 export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'PublicArticleEntity', id: string, title?: string | null, slug?: string | null, excerpt?: string | null, ogImage?: string | null, createdAt: any, content?: string | null, category?: { __typename?: 'Category', name: string } | null, media?: Array<{ __typename?: 'Media', url: string }> | null, author?: { __typename?: 'PublicAuthorEntity', username: string } | null } | null };
+
+export type GetTestimonialsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTestimonialsQuery = { __typename?: 'Query', testimonies: Array<{ __typename?: 'PublicTestimonyEntity', id: string, name: string, position?: string | null, avatarUrl?: string | null, company?: string | null, content: string }> };
 
 
 export const CreateInquiryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInquiry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateInquiryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createInquiry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createInquiryInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalOrClinic"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<CreateInquiryMutation, CreateInquiryMutationVariables>;
@@ -1417,3 +1625,4 @@ export const ProductDocument = {"kind":"Document","definitions":[{"kind":"Operat
 export const GetTeamMembersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTeamMembers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamMembers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"socials"}}]}}]}}]} as unknown as DocumentNode<GetTeamMembersQuery, GetTeamMembersQueryVariables>;
 export const GetArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]} as unknown as DocumentNode<GetArticlesQuery, GetArticlesQueryVariables>;
 export const ArticleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Article"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"articleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"article"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"articleId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<ArticleQuery, ArticleQueryVariables>;
+export const GetTestimonialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTestimonials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"testimonies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}},{"kind":"Field","name":{"kind":"Name","value":"company"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<GetTestimonialsQuery, GetTestimonialsQueryVariables>;

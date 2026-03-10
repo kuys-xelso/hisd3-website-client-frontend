@@ -1,9 +1,9 @@
-
-import ButtonAnimated from "@/components/ButtonAnimated";
 import ButtonHero from "@/components/ButtonHero";
 import { Link } from "@tanstack/react-router";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
+import { ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
   return (
@@ -35,14 +35,20 @@ export const HeroSection = () => {
           </main>
 
           <div className="flex flex-col items-center justify-center  sm:flex-row gap-4 w-full sm:w-auto pt-4">
-            <Link to="/contactUs" className="w-full sm:w-auto">
-              <ButtonHero />
+            <Link to="/solutions" className="w-full sm:w-auto">
+              <ButtonHero
+                text="Explore Solutions"
+                icon={<ArrowUpRight size={16} className="sm:w-auto w-full" />}
+              />
             </Link>
 
             <Link to="/aboutUs" className="w-full sm:w-auto">
-              <ButtonAnimated className="h-12 rounded-full px-8 text-sm font-semibold sm:w-auto w-full">
+              <Button
+                variant="outline"
+                className="h-10 rounded-full px-8 text-sm font-semibold sm:w-auto cursor-pointer"
+              >
                 Learn More
-              </ButtonAnimated>
+              </Button>
             </Link>
           </div>
         </div>
