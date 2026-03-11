@@ -23,6 +23,7 @@ type Documents = {
     "\n  query Article($articleId: String!) {\n    article(id: $articleId) {\n      id\n      title\n      slug\n      excerpt\n      ogImage\n      createdAt\n      category {\n        name\n      }\n      media {\n        url\n      }\n      content\n      author {\n        username\n      }\n    }\n  }\n": typeof types.ArticleDocument,
     "\n  query GetTestimonials {\n    testimonies {\n      id\n      name\n      position\n      avatarUrl\n      company\n      content\n    }\n  }\n": typeof types.GetTestimonialsDocument,
     "\nquery CompanyProfile {\n  companyProfile {\n    id\n    address\n    phone\n    email\n    socials\n  }\n}\n": typeof types.CompanyProfileDocument,
+    "\n  query GetGalleries {\n    galleries {\n      id\n      title\n      coverImageUrl\n    }\n  }\n": typeof types.GetGalleriesDocument,
 };
 const documents: Documents = {
     "\n  mutation CreateInquiry($input: CreateInquiryInput!) {\n    createInquiry(createInquiryInput: $input) {\n      id\n      name\n      email\n      phone\n      hospitalOrClinic\n      message\n    }\n  }\n": types.CreateInquiryDocument,
@@ -34,6 +35,7 @@ const documents: Documents = {
     "\n  query Article($articleId: String!) {\n    article(id: $articleId) {\n      id\n      title\n      slug\n      excerpt\n      ogImage\n      createdAt\n      category {\n        name\n      }\n      media {\n        url\n      }\n      content\n      author {\n        username\n      }\n    }\n  }\n": types.ArticleDocument,
     "\n  query GetTestimonials {\n    testimonies {\n      id\n      name\n      position\n      avatarUrl\n      company\n      content\n    }\n  }\n": types.GetTestimonialsDocument,
     "\nquery CompanyProfile {\n  companyProfile {\n    id\n    address\n    phone\n    email\n    socials\n  }\n}\n": types.CompanyProfileDocument,
+    "\n  query GetGalleries {\n    galleries {\n      id\n      title\n      coverImageUrl\n    }\n  }\n": types.GetGalleriesDocument,
 };
 
 /**
@@ -86,6 +88,10 @@ export function gql(source: "\n  query GetTestimonials {\n    testimonies {\n   
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nquery CompanyProfile {\n  companyProfile {\n    id\n    address\n    phone\n    email\n    socials\n  }\n}\n"): (typeof documents)["\nquery CompanyProfile {\n  companyProfile {\n    id\n    address\n    phone\n    email\n    socials\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetGalleries {\n    galleries {\n      id\n      title\n      coverImageUrl\n    }\n  }\n"): (typeof documents)["\n  query GetGalleries {\n    galleries {\n      id\n      title\n      coverImageUrl\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
