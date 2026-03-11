@@ -2,13 +2,14 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "../../ui/carousel";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
+import { useQuery } from "@apollo/client/react";
+import { GET_GALLERY } from "@/graphql/queries";
+import type { GetGalleriesQuery } from "@/graphql/generated/graphql";
 
-const galleryImages = [
+const fallbackImages = [
   {
     src: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1600&auto=format&fit=crop",
     alt: "Doctor smiling with patient",
@@ -28,6 +29,16 @@ const galleryImages = [
 ];
 
 export const Gallery = () => {
+  const { data, loading, error } = useQuery<GetGalleriesQuery>(GET_GALLERY);
+
+  const galleryImages =
+    data?.galleries && data.galleries.length > 0
+      ? data.galleries.map((g) => ({
+          src: `${import.meta.env.VITE_API_URL}${g.coverImageUrl}`,
+          alt: g.title,
+        }))
+      : fallbackImages;
+
   return (
     <Section
       size="lg"
@@ -42,6 +53,18 @@ export const Gallery = () => {
             A modern look at our healthcare environment and professional team.
           </p>
         </div>
+
+        {loading && (
+          <div className="flex justify-center py-16">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-16 text-red-500">
+            <p>Failed to load gallery. Showing default images.</p>
+          </div>
+        )}
 
         <div className="relative w-full mx-auto px-4">
           <Carousel
@@ -80,15 +103,6 @@ export const Gallery = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* Clean SaaS Controls */}``
-            <CarouselPrevious
-              variant="outline"
-              className="hidden md:flex h-10 w-10 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 -left-4"
-            />
-            <CarouselNext
-              variant="outline"
-              className="hidden md:flex h-10 w-10 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 -right-4"
-            />
           </Carousel>
         </div>
       </Container>

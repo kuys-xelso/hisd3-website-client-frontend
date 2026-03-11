@@ -110,20 +110,6 @@ export const GET_TESTIMONIALS = gql(`
   }
 `);
 
-// export const GET_GALLERY = gql(`
-// query Galleries {
-//   galleries {
-//     id
-//     name
-//     description
-//     slug
-//     media {
-//       url
-//     }
-//   }
-// }
-// `);
-
 export const GET_COMPANY_PROFILE = gql(`
 query CompanyProfile {
   companyProfile {
@@ -135,3 +121,14 @@ query CompanyProfile {
   }
 }
 `);
+
+export const GET_GALLERY = gql(`
+  query GetGalleries {
+    galleries {
+      id
+      title
+      coverImageUrl
+    }
+  }
+`);
+
