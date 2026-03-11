@@ -1,8 +1,4 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "../../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../../ui/carousel";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { useQuery } from "@apollo/client/react";
@@ -34,7 +30,7 @@ export const Gallery = () => {
   const galleryImages =
     data?.galleries && data.galleries.length > 0
       ? data.galleries.map((g) => ({
-          src: `${import.meta.env.VITE_API_URL}${g.coverImageUrl}`,
+          src: g.coverImageUrl || "",
           alt: g.title,
         }))
       : fallbackImages;
