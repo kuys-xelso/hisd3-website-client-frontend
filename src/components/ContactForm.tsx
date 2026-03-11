@@ -4,7 +4,7 @@ import { formSchema } from "../lib/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 import {
     Field,
     FieldGroup,
@@ -21,7 +21,7 @@ type Schema = z.infer<typeof formSchema>;
 
 export function ContactForm() {
 
-    const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY);
+    const [createInquiry, { loading, error: mutationError }] = useMutation(CREATE_INQUIRY);
 
     const form = useForm<Schema>({
         resolver: zodResolver(formSchema),
@@ -53,6 +53,7 @@ export function ContactForm() {
             });
         } catch (error) {
             console.error("Mutation error:", error);
+            throw error; // Rethrow to prevent isSubmitSuccessful from being true
         }
     });
 
@@ -212,6 +213,12 @@ export function ContactForm() {
                     )}
                 />
             </FieldGroup>
+            {mutationError && (
+                <div className="mb-6 p-4 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20 flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                    <p>We couldn't submit your message. Please check your connection and try again.</p>
+                </div>
+            )}
             <div className="flex justify-end items-center w-full">
                 <Button disabled={isSubmitting || loading}>
                     {isSubmitting || loading ? "Submitting..." : "Submit"}

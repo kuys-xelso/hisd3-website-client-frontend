@@ -1,10 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Marquee } from "@/components/shadcn-space/animations/marquee";
-import { Quote, Building2 } from "lucide-react";
+import { Quote, Building2, AlertCircle, RefreshCcw } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { useQuery } from "@apollo/client/react";
 import { GET_TESTIMONIALS } from "@/graphql/queries";
+import { Button } from "@/components/ui/button";
 
 interface Testimony {
   id: string;
@@ -70,15 +71,58 @@ const ReviewCard = ({ review }: { review: Testimony }) => {
 };
 
 export const TestimonialCardSection = () => {
-  const { data, loading, error } = useQuery(GET_TESTIMONIALS);
+  const { data, loading, error, refetch } = useQuery(GET_TESTIMONIALS, {
+    notifyOnNetworkStatusChange: true,
+  });
 
-  if (loading) return <p className="text-center py-20 text-muted-foreground">Loading testimonials...</p>;
-  if (error) return <p className="text-center py-20 text-destructive">Failed to load testimonials.</p>;
+  if (loading) {
+    return (
+      <Section size="lg" className="overflow-x-hidden">
+        <Container>
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-pulse">
+            <RefreshCcw className="h-8 w-8 animate-spin mb-4 text-primary/50" />
+            <p>Loading testimonials...</p>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
+  if (error) {
+    return (
+      <Section size="lg" className="overflow-x-hidden">
+        <Container>
+          <div className="flex flex-col items-center justify-center py-20 text-center border rounded-xl bg-destructive/5 border-destructive/20">
+            <AlertCircle className="h-10 w-10 text-destructive mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">Failed to load testimonials</h3>
+            <p className="text-muted-foreground mb-6 max-w-sm">
+              Please check your internet connection or try again later. If the problem persists, our backend servers might be temporarily down.
+            </p>
+            <Button variant="outline" onClick={() => refetch()} className="gap-2">
+              <RefreshCcw className="h-4 w-4" /> Try Again
+            </Button>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
 
   const testimonies = data?.testimonies || [];
   
   if (testimonies.length === 0) {
-    return null;
+    return (
+      <Section size="lg" className="overflow-x-hidden">
+        <Container>
+          <h1 className="text-center text-xl md:text-2xl lg:text-4xl font-bold mb-2 text-primary">
+            What Our Clients Say
+          </h1>
+          <div className="flex flex-col items-center justify-center py-20 border border-dashed rounded-xl bg-muted/30">
+            <Quote className="h-10 w-10 text-muted-foreground/30 mb-4" />
+            <p className="text-muted-foreground">No testimonials are available right now. Check back later!</p>
+          </div>
+        </Container>
+      </Section>
+    );
   }
 
   const firstrow = testimonies.slice(0, Math.ceil(testimonies.length / 2));
