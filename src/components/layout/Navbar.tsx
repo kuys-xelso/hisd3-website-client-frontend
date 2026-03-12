@@ -111,7 +111,6 @@ export const Navbar = () => {
             </div>
 
             <Link to="/contactUs" className="hidden lg:flex">
-              {/* <CollaborateButton /> */}
               <ButtonHero />
             </Link>
 

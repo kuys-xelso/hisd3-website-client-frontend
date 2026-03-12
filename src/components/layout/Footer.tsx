@@ -75,9 +75,12 @@ export const Footer = () => {
               HIS<span className="text-logo-red">D3</span>
             </Link>
             <p className="text-muted-foreground">
-              HISD3 helps you centralize your product, sales, and user data -
-              all in one simple, real-time dashboard built for growing
-              businesses.
+              HISD3 Inc.{" "}
+              <i>
+                Hospital Information System - Designed by Doctors for Doctors
+              </i>{" "}
+              is a software company that is dedicated to provide software
+              solutions for the healthcare industry.
             </p>
             <div className="mt-4">
               <h3 className="font-bold text-lg">Follow us on</h3>
@@ -96,7 +99,7 @@ export const Footer = () => {
                       rel="noopener noreferrer"
                       className="flex w-fit"
                     >
-                      <Icon className="w-10 h-10 text-primary transition-transform duration-300 hover:scale-115" />
+                      <Icon className="w-8 h-8 text-primary transition-transform duration-300 hover:scale-115" />
                     </a>
                   );
                 })}
