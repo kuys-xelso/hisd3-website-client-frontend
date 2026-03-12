@@ -1,11 +1,26 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@apollo/client/react";
 import { GET_PRODUCTS, GET_COMPANY_PROFILE } from "@/graphql/queries";
-import type { GetProductsQuery, CompanyProfileQuery } from "@/graphql/generated/graphql";
+import type {
+  GetProductsQuery,
+  CompanyProfileQuery,
+} from "@/graphql/generated/graphql";
 import { solutionsData as fallbackSolutionList } from "@/components/sections/solutions/solutionsData";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { FacebookIcon, InstagramIcon } from "@/components/NewIcons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  XIcon,
+} from "@/components/NewIcons";
+
+const socialIconMap: Record<string, any> = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  linkedin: LinkedinIcon,
+  twitter: XIcon,
+};
 
 const pages = [
   {
@@ -32,10 +47,13 @@ const pages = [
 
 export const Footer = () => {
   const { data } = useQuery<GetProductsQuery>(GET_PRODUCTS);
-  const { data: companyData } = useQuery<CompanyProfileQuery>(GET_COMPANY_PROFILE);
+  const { data: companyData } =
+    useQuery<CompanyProfileQuery>(GET_COMPANY_PROFILE);
 
   const profile = companyData?.companyProfile;
   const socials = profile?.socials as Record<string, string> | undefined;
+
+  const socialEntries = socials ? Object.entries(socials) : [];
 
   const displayList =
     data?.products && data.products.length > 0
@@ -65,22 +83,23 @@ export const Footer = () => {
               <h3 className="font-bold text-lg">Follow us on</h3>
 
               <div className="flex gap-1 mt-4">
-                <a
-                  href={socials?.facebook ?? "https://facebook.com"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-fit"
-                >
-                  <FacebookIcon className="w-10 h-10 text-primary transition-transform duration-300 hover:scale-115" />
-                </a>
-                <a
-                  href={socials?.instagram ?? "https://instagram.com"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-fit"
-                >
-                  <InstagramIcon className="w-10 h-10 text-primary transition-transform duration-300 hover:scale-115" />
-                </a>
+                {socialEntries.map(([platform, url]) => {
+                  const Icon = socialIconMap[platform];
+
+                  if (!Icon) return null;
+
+                  return (
+                    <a
+                      key={platform}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-fit"
+                    >
+                      <Icon className="w-10 h-10 text-primary transition-transform duration-300 hover:scale-115" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -117,7 +136,7 @@ export const Footer = () => {
           <div className="col-span-full xl:col-span-2">
             <h3 className="font-bold text-lg">Address</h3>
             <div className="text-muted-foreground hover:text-foreground">
-              {profile?.address ?? "2/F F & L Centre 2211 Commonwealth Avenue Brgy. Holy Spirit, Quezon City, Philippines 1127"}
+              {profile?.address ?? "-"}
             </div>
 
             <h3 className="font-bold text-lg mt-4">Contacts</h3>
@@ -137,7 +156,7 @@ export const Footer = () => {
                   href="tel:+639171234567"
                   className="text-muted-foreground hover:text-foreground hover:translate-x-2"
                 >
-                  +63 917 123 4567
+                  -
                 </a>
               </div>
             )}
@@ -158,7 +177,7 @@ export const Footer = () => {
                   href="mailto:info@hisd3.com"
                   className="text-muted-foreground hover:text-foreground hover:translate-x-2"
                 >
-                  info@hisd3.com
+                  -
                 </a>
               </div>
             )}
