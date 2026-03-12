@@ -8,6 +8,7 @@ import { GET_ARTICLE_BY_ID, GET_ARTICLES } from "@/graphql/queries";
 import DOMPurify from "dompurify";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
+import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/NewIcons";
 
 export const Route = createFileRoute("/resources/$resourcesId")({
   component: RouteComponent,
@@ -174,45 +175,32 @@ function RouteComponent() {
                 <Share2 className="w-4 h-4" />
                 <span>Share this article</span>
               </div>
-              <div className="flex gap-2">
-                <div className="flex gap-4">
-                  <a
-                    href="https://www.facebook.com"
-                    rel="noreferrer noopener"
-                    target="_blank"
-                    className="opacity-60 hover:opacity-100"
-                  >
-                    <img
-                      src="/icon-facebook-fill.svg"
-                      alt=""
-                      className="h-6 w-6"
-                    />
-                  </a>
-                  <a
-                    href="https://www.twitter.com"
-                    rel="noreferrer noopener"
-                    target="_blank"
-                    className="opacity-60 hover:opacity-100"
-                  >
-                    <img
-                      src="/icon-x-outlined.svg"
-                      alt=""
-                      className="h-6 w-6"
-                    />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com"
-                    rel="noreferrer noopener"
-                    target="_blank"
-                    className="opacity-60 hover:opacity-100"
-                  >
-                    <img
-                      src="/icon-linkedin-fill.svg"
-                      alt=""
-                      className="h-6 w-6"
-                    />
-                  </a>
-                </div>
+
+              <div className="flex gap-1">
+                <a
+                  href="https://www.facebook.com"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                  className="flex w-fit"
+                >
+                  <FacebookIcon className="w-6 h-6 text-primary hover:text-primary transition-transform hover:scale-120" />
+                </a>
+                <a
+                  href="https://www.linkedin.com"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                  className="flex w-fit"
+                >
+                  <LinkedinIcon className="w-6 h-6 text-primary hover:text-primary transition-transform hover:scale-120" />
+                </a>
+                <a
+                  href="https://www.twitter.com"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                  className="flex w-fit"
+                >
+                  <XIcon className="w-6 h-6 text-primary hover:text-primary transition-transform hover:scale-120" />
+                </a>
               </div>
             </div>
 
