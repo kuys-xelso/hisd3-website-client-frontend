@@ -42,7 +42,7 @@ export const Gallery = () => {
     >
       <Container>
         <div className="max-w-4xl mx-auto text-center mb-16 px-6">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-primary">
             HISD3 Photo Gallery
           </h2>
           <p className="mt-4 text-slate-500">

@@ -34,9 +34,18 @@ export const Principle = () => {
   return (
     <Section size="lg" className="bg-background">
       <Container>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          Our <span className="text-primary">Clinical Tech Philosophy</span>
-        </h2>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+            Our{" "}
+            <span className="text-primary italic">
+              Clinical Tech Philosophy
+            </span>
+          </h2>
+          <p className="text-muted-foreground mt-4 text-lg max-w-2xl mx-auto">
+            We operate at the intersection of medical ethics and
+            high-performance engineering.
+          </p>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Vertical Cards */}
@@ -66,7 +75,7 @@ export const Principle = () => {
           {/* Right Column: Image */}
           <div className="order-1 lg:order-2 flex justify-center">
             <img
-              src="/about-hero.svg"
+              src="/hero-about-section.svg"
               alt="HISD3 Principles"
               className="w-full max-w-[600px] h-auto object-contain rounded-2xl animate-in fade-in slide-in-from-right-8 duration-1000"
             />

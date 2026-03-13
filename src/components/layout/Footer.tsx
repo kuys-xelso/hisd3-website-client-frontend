@@ -195,7 +195,7 @@ export const Footer = () => {
             <span className="text-primary transition-all border-primary hover:border-b-2">
               HISD3 Inc.
             </span>{" "}
-            All rights reserved | Built to digitize healthcare facilities{" "}
+            All rights reserved | HISD3: Empowering Clinicians through Innovation.
           </h3>
         </Container>
       </Section>

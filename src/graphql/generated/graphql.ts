@@ -538,7 +538,7 @@ export type Mutation = {
   createCategory: Category;
   createCompanyProfile: CompanyProfile;
   createGallery: AdminGalleryEntity;
-  createInquiry: Inquiry;
+  createInquiry: PublicInquiryResponseEntity;
   createProduct: Product;
   createTeamMember: TeamMember;
   createTestimony: Testimony;
@@ -994,6 +994,12 @@ export type PublicGalleryEntity = {
   title: Scalars['String']['output'];
 };
 
+export type PublicInquiryResponseEntity = {
+  __typename?: 'PublicInquiryResponseEntity';
+  message?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+};
+
 export type PublicProductEntity = {
   __typename?: 'PublicProductEntity';
   category?: Maybe<Category>;
@@ -1012,6 +1018,17 @@ export type PublicProfileEntity = {
   designation?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
+};
+
+export type PublicTeamMemberEntity = {
+  __typename?: 'PublicTeamMemberEntity';
+  bio?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  position: Scalars['String']['output'];
+  socials?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type PublicTestimonyEntity = {
@@ -1052,7 +1069,7 @@ export type Query = {
   product?: Maybe<PublicProductEntity>;
   products: Array<PublicProductEntity>;
   teamMember: TeamMember;
-  teamMembers: Array<TeamMember>;
+  teamMembers: Array<PublicTeamMemberEntity>;
   testimonies: Array<PublicTestimonyEntity>;
 };
 
@@ -1566,11 +1583,11 @@ export enum __DirectiveLocation {
 }
 
 export type CreateInquiryMutationVariables = Exact<{
-  input: CreateInquiryInput;
+  createInquiryInput: CreateInquiryInput;
 }>;
 
 
-export type CreateInquiryMutation = { __typename?: 'Mutation', createInquiry: { __typename?: 'Inquiry', id: string, name?: string | null, email?: string | null, phone?: string | null, hospitalOrClinic?: string | null, message?: string | null } };
+export type CreateInquiryMutation = { __typename?: 'Mutation', createInquiry: { __typename?: 'PublicInquiryResponseEntity', success: boolean } };
 
 export type TestConnectionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1592,7 +1609,7 @@ export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Pub
 export type GetTeamMembersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTeamMembersQuery = { __typename?: 'Query', teamMembers: Array<{ __typename?: 'TeamMember', id: string, name: string, position: string, image?: string | null, socials?: any | null }> };
+export type GetTeamMembersQuery = { __typename?: 'Query', teamMembers: Array<{ __typename?: 'PublicTeamMemberEntity', id: string, name: string, position: string, image?: string | null, socials?: any | null }> };
 
 export type GetArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1622,7 +1639,7 @@ export type GetGalleriesQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetGalleriesQuery = { __typename?: 'Query', galleries: Array<{ __typename?: 'PublicGalleryEntity', id: string, title: string, coverImageUrl?: string | null }> };
 
 
-export const CreateInquiryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInquiry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateInquiryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createInquiry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createInquiryInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalOrClinic"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<CreateInquiryMutation, CreateInquiryMutationVariables>;
+export const CreateInquiryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInquiry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createInquiryInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateInquiryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createInquiry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createInquiryInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createInquiryInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<CreateInquiryMutation, CreateInquiryMutationVariables>;
 export const TestConnectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TestConnection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__schema"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"types"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<TestConnectionQuery, TestConnectionQueryVariables>;
 export const GetProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProducts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"tagline"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
 export const ProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Product"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"productId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"product"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"productId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"tagline"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<ProductQuery, ProductQueryVariables>;
