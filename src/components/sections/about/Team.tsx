@@ -5,7 +5,6 @@ import { Container } from "@/components/layout/Container";
 import { useQuery } from "@apollo/client/react";
 import { GET_TEAM_MEMBERS } from "@/graphql/queries";
 
-import { Badge } from "@/components/ui/badge";
 import { motion } from "motion/react";
 import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/NewIcons";
 import { AlertCircle, RefreshCcw, Users } from "lucide-react";
@@ -35,11 +34,17 @@ export const Team = () => {
         <Container>
           <div className="flex flex-col items-center justify-center py-20 text-center border rounded-xl bg-destructive/5 border-destructive/20">
             <AlertCircle className="h-10 w-10 text-destructive mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">Failed to load team members</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              Failed to load team members
+            </h3>
             <p className="text-muted-foreground mb-6 max-w-sm">
               Please check your internet connection or try again later.
             </p>
-            <Button variant="outline" onClick={() => refetch()} className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => refetch()}
+              className="gap-2"
+            >
               <RefreshCcw className="h-4 w-4" /> Try Again
             </Button>
           </div>
@@ -56,7 +61,9 @@ export const Team = () => {
         <Container>
           <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed rounded-xl bg-muted/30">
             <Users className="h-10 w-10 text-muted-foreground/30 mb-4" />
-            <p className="text-muted-foreground">No team members to display at the moment.</p>
+            <p className="text-muted-foreground">
+              No team members to display at the moment.
+            </p>
           </div>
         </Container>
       </Section>
@@ -79,18 +86,13 @@ export const Team = () => {
               }}
               className="max-w-xl mx-auto flex flex-col items-center text-center gap-4"
             >
-              <Badge variant="outline" className="px-3 py-1 h-auto text-sm">
-                Team
-              </Badge>
-
               <div className="flex flex-col gap-3">
-                <h2 className="text-3xl md:text-5xl font-semibold text-foreground">
-                  Meet our team
+                <h2 className="text-4xl md:text-6xl font-bold text-primary tracking-tight">
+                  The Minds Behind the Mission
                 </h2>
 
-                <p className="text-base text-muted-foreground">
-                  Our team is committed to redefining digital experiences
-                  through innovative technology and collaboration.
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  A synergistic blend of specialized physicians and platform engineers committed to redefining healthcare technology.
                 </p>
               </div>
             </motion.div>

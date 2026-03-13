@@ -23,14 +23,15 @@ export const HeroSection = () => {
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1]">
               The{" "}
               <span className="bg-linear-to-r from-primary to-primary/80 text-transparent bg-clip-text">
-                Hospital Information
+                Hospital Information System
               </span>{" "}
-              That Thinks Like a Clinician.
+              Designed by Doctors, for Doctors.
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              HISD3 provides comprehensive software solutions to digitize your
-              entire hospital. Secure, scalable, and intuitive by design.
+              Elevate patient care with a clinical-first platform that matches
+              your real-world bedside workflows. Secure, scalable, and intuitive
+              by design.
             </p>
           </main>
 

@@ -7,25 +7,25 @@ const advantageList = [
     icon: "/advantage-stethoscope.svg",
     title: "Clinical Intuition",
     description:
-      "Interfaces developed by medical professionals to match real-world bedside workflows. This ensures that the system is intuitive and easy to use for healthcare providers.",
+      "Designed by doctors to mirror actual hospital workflows, reducing documentation fatigue and clinical errors.",
   },
   {
     icon: "/advantage-rack-server.svg",
     title: "Seamless Scalability",
     description:
-      "Cloud-native architecture that grows effortlessly with your hospital's expanding needs. This ensures that the system is always available and can handle the demands of a busy hospital.",
+      "Our cloud-native architecture expands with your facility, from 50 beds to 5,000, without missing a beat.",
   },
   {
     icon: "/advantage-query-stats.svg",
     title: "Actionable Insights",
     description:
-      "Real-time analytics and reporting tools for data-driven clinical and administrative decisions. This ensures that the system is always available and can handle the demands of a busy hospital.",
+      "Turn raw data into life-saving decisions with real-time analytics for both clinical outcomes and administrative efficiency.",
   },
   {
     icon: "/advantage-headset.svg",
     title: "Unmatched Support",
     description:
-      "24/7 dedicated technical assistance and expert training for your entire medical staff. This ensures that the system is always available and can handle the demands of a busy hospital.",
+      "Gain a partner, not just a vendor. We provide 24/7 dedicated technical assistance and staff training from experts who understand healthcare.",
   },
 ];
 
@@ -35,12 +35,10 @@ export const AdvantageSection = () => {
       <Container>
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Why Choose <span className="text-primary">HISD3</span>?
+            Built for the Bedside, <span className="text-primary">Optimized for the Boardroom</span>
           </h1>
           <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
-            HISD3 is a comprehensive hospital information system that helps
-            hospitals streamline operations, improve patient care, and enhance
-            data management.
+            Discover why hospitals around the world trust HISD3 to bridge the gap between complex digital infrastructure and seamless clinical excellence.
           </p>
         </div>
 

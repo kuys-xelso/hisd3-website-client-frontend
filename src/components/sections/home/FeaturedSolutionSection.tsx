@@ -11,7 +11,7 @@ const solutionList = [
     icon: "/advantage-stethoscope.svg",
     title: "HISD3 Mobile",
     description:
-      "Access patient data and hospital operations on the go with our secure mobile application.",
+      "Your clinical dashboard, anywhere. Access real-time patient data and hospital operations securely from any mobile device.",
     slug: "hisd3-mobile",
     image: "https://images.shadcnspace.com/assets/blog/blog-img12.jpg",
   },
@@ -19,7 +19,7 @@ const solutionList = [
     icon: "/advantage-rack-server.svg",
     title: "HISD3 Cloud",
     description:
-      "Secure and scalable cloud-based hospital management system for modern healthcare.",
+      "A limitless, secure, and highly available backbone for your hospital’s data and operations.",
     slug: "hisd3-cloud",
     image: "https://images.shadcnspace.com/assets/blog/blog-img11.jpg",
   },
@@ -27,7 +27,7 @@ const solutionList = [
     icon: "/advantage-query-stats.svg",
     title: "Patient Portal",
     description:
-      "Empower patients with secure access to their medical records and appointment scheduling.",
+      "Transform the patient experience with self-service scheduling, digital health records, and secure communication.",
     slug: "patient-portal",
     image: "https://images.shadcnspace.com/assets/blog/blog-img10.jpg",
   },
@@ -65,14 +65,12 @@ export const FeaturedSolutionSection = ({
     <Section size="lg" id="featured-solution">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Everything Your Hospital Needs in{" "}
-            <span className="text-primary">One Platform</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">
+            Comprehensive Digital Infrastructure for{" "}
+            <span className="text-primary">Modern Healthcare</span>
           </h2>
           <p className="max-w-2xl mx-auto text-muted-foreground text-lg text-balance">
-            HISD3 is a comprehensive hospital information system that helps
-            hospitals streamline operations, improve patient care, and enhance
-            data management.
+            From independent clinics to multi-specialty hospital networks, HISD3 provides a unified ecosystem to manage every patient journey.
           </p>
         </div>
 

@@ -14,7 +14,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  mutation CreateInquiry($input: CreateInquiryInput!) {\n    createInquiry(createInquiryInput: $input) {\n      id\n      name\n      email\n      phone\n      hospitalOrClinic\n      message\n    }\n  }\n": typeof types.CreateInquiryDocument,
+    "\n  mutation CreateInquiry($createInquiryInput: CreateInquiryInput!) {\n  createInquiry(createInquiryInput: $createInquiryInput) {\n    success\n  }\n}\n": typeof types.CreateInquiryDocument,
     "\n  query TestConnection {\n    __schema {\n      types {\n        name\n      }\n    }\n  }\n": typeof types.TestConnectionDocument,
     "\n  query GetProducts {\n    products {\n      id\n      name\n      tagline\n      slug\n      media {\n        url\n      }\n    }\n  }\n": typeof types.GetProductsDocument,
     "\nquery Product($productId: String!) {\n  product(id: $productId) {\n    id\n    name\n    tagline\n    description\n    slug\n    media {\n      url\n    }\n  }\n}\n": typeof types.ProductDocument,
@@ -26,7 +26,7 @@ type Documents = {
     "\n  query GetGalleries {\n    galleries {\n      id\n      title\n      coverImageUrl\n    }\n  }\n": typeof types.GetGalleriesDocument,
 };
 const documents: Documents = {
-    "\n  mutation CreateInquiry($input: CreateInquiryInput!) {\n    createInquiry(createInquiryInput: $input) {\n      id\n      name\n      email\n      phone\n      hospitalOrClinic\n      message\n    }\n  }\n": types.CreateInquiryDocument,
+    "\n  mutation CreateInquiry($createInquiryInput: CreateInquiryInput!) {\n  createInquiry(createInquiryInput: $createInquiryInput) {\n    success\n  }\n}\n": types.CreateInquiryDocument,
     "\n  query TestConnection {\n    __schema {\n      types {\n        name\n      }\n    }\n  }\n": types.TestConnectionDocument,
     "\n  query GetProducts {\n    products {\n      id\n      name\n      tagline\n      slug\n      media {\n        url\n      }\n    }\n  }\n": types.GetProductsDocument,
     "\nquery Product($productId: String!) {\n  product(id: $productId) {\n    id\n    name\n    tagline\n    description\n    slug\n    media {\n      url\n    }\n  }\n}\n": types.ProductDocument,
@@ -55,7 +55,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation CreateInquiry($input: CreateInquiryInput!) {\n    createInquiry(createInquiryInput: $input) {\n      id\n      name\n      email\n      phone\n      hospitalOrClinic\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation CreateInquiry($input: CreateInquiryInput!) {\n    createInquiry(createInquiryInput: $input) {\n      id\n      name\n      email\n      phone\n      hospitalOrClinic\n      message\n    }\n  }\n"];
+export function gql(source: "\n  mutation CreateInquiry($createInquiryInput: CreateInquiryInput!) {\n  createInquiry(createInquiryInput: $createInquiryInput) {\n    success\n  }\n}\n"): (typeof documents)["\n  mutation CreateInquiry($createInquiryInput: CreateInquiryInput!) {\n  createInquiry(createInquiryInput: $createInquiryInput) {\n    success\n  }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

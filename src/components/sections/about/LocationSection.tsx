@@ -48,7 +48,7 @@ export const LocationSection = () => {
     <Section size="lg" className="bg-secondary/30">
       <Container>
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 border-l-4 border-primary pl-4 inline-block">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary border-l-4 border-primary pl-4 inline-block">
             Our Location
           </h2>
 
