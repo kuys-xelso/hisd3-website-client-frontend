@@ -1,21 +1,17 @@
+("use client");
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-("use client");
-
-import { useQuery } from "@apollo/client/react";
-import { GET_TEAM_MEMBERS } from "@/graphql/queries";
+import { useTeams } from "@/hooks/useTeams";
 
 import { motion } from "motion/react";
-import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/NewIcons";
+import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { AlertCircle, RefreshCcw, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Team = () => {
-  const { data, loading, error, refetch } = useQuery(GET_TEAM_MEMBERS, {
-    notifyOnNetworkStatusChange: true,
-  });
+  const { teamMembers, isLoading, error, refetch } = useTeams();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Section size="lg" className="overflow-x-hidden">
         <Container>
@@ -53,9 +49,7 @@ export const Team = () => {
     );
   }
 
-  const teamList = data?.teamMembers || [];
-
-  if (teamList.length === 0) {
+  if (teamMembers.length === 0) {
     return (
       <Section size="lg" className="overflow-x-hidden">
         <Container>
@@ -92,14 +86,15 @@ export const Team = () => {
                 </h2>
 
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  A synergistic blend of specialized physicians and platform engineers committed to redefining healthcare technology.
+                  A synergistic blend of specialized physicians and platform
+                  engineers committed to redefining healthcare technology.
                 </p>
               </div>
             </motion.div>
 
             {/* TEAM GRID */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-              {teamList.map((member: any, index: number) => {
+            <div className="flex flex-wrap justify-center gap-6 w-full">
+              {teamMembers.map((member: any, index: number) => {
                 let socials: any = {};
                 if (typeof member.socials === "string") {
                   try {
@@ -137,7 +132,7 @@ export const Team = () => {
                       delay: index * 0.1,
                       ease: [0.21, 0.47, 0.32, 0.98],
                     }}
-                    className="group flex flex-col items-start gap-6"
+                    className="group flex flex-col items-start gap-6 w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
                   >
                     {/* IMAGE */}
                     <div className="relative w-full h-80 overflow-hidden rounded-lg">

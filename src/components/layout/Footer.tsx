@@ -13,7 +13,7 @@ import {
   InstagramIcon,
   LinkedinIcon,
   XIcon,
-} from "@/components/NewIcons";
+} from "@/components/Icons";
 
 const socialIconMap: Record<string, any> = {
   facebook: FacebookIcon,
@@ -195,7 +195,8 @@ export const Footer = () => {
             <span className="text-primary transition-all border-primary hover:border-b-2">
               HISD3 Inc.
             </span>{" "}
-            All rights reserved | HISD3: Empowering Clinicians through Innovation.
+            All rights reserved | HISD3: Empowering Clinicians through
+            Innovation.
           </h3>
         </Container>
       </Section>

@@ -1,9 +1,7 @@
 import { Carousel, CarouselContent, CarouselItem } from "../../ui/carousel";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { useQuery } from "@apollo/client/react";
-import { GET_GALLERY } from "@/graphql/queries";
-import type { GetGalleriesQuery } from "@/graphql/generated/graphql";
+import { useGallery } from "@/hooks/useGallery";
 
 const fallbackImages = [
   {
@@ -25,11 +23,11 @@ const fallbackImages = [
 ];
 
 export const Gallery = () => {
-  const { data, loading, error } = useQuery<GetGalleriesQuery>(GET_GALLERY);
+  const { galleryImages, isLoading, error } = useGallery();
 
-  const galleryImages =
-    data?.galleries && data.galleries.length > 0
-      ? data.galleries.map((g) => ({
+  const Images =
+    galleryImages && galleryImages.length > 0
+      ? galleryImages.map((g) => ({
           src: g.coverImageUrl || "",
           alt: g.title,
         }))
@@ -50,7 +48,7 @@ export const Gallery = () => {
           </p>
         </div>
 
-        {loading && (
+        {isLoading && (
           <div className="flex justify-center py-16">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
           </div>
@@ -75,7 +73,7 @@ export const Gallery = () => {
             <div className="pointer-events-none absolute left-0 top-0 h-full w-28 bg-gradient-to-r from-slate-50 to-transparent z-10" />
             <div className="pointer-events-none absolute right-0 top-0 h-full w-28 bg-gradient-to-l from-white to-transparent z-10" />
             <CarouselContent className="py-8">
-              {galleryImages.map((image, index) => (
+              {Images.map((image, index) => (
                 <CarouselItem
                   key={index}
                   className="basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 px-4"

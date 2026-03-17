@@ -8,7 +8,7 @@ import { GET_ARTICLE_BY_ID, GET_ARTICLES } from "@/graphql/queries";
 import DOMPurify from "dompurify";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/NewIcons";
+import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/Icons";
 
 export const Route = createFileRoute("/resources/$resourcesId")({
   component: RouteComponent,
