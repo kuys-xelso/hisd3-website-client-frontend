@@ -19,13 +19,17 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "My Project",
+        title: "Hospital Information System Designed by Doctors for Doctors",
       },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        href: "/hisd3-logo.svg",
       },
     ],
   }),

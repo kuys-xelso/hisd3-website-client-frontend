@@ -2,15 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { solutionsData } from "@/components/sections/solutions/solutionsData";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@apollo/client/react";
-import { GET_PRODUCT_BY_ID } from "@/graphql/queries";
 import { ArrowUpRight } from "lucide-react";
 import DOMPurify from "dompurify";
 import { Share2, AlertCircle, RefreshCcw } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import ButtonHero from "@/components/ButtonHero";
-import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/NewIcons";
+import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/Icons";
+import { useProduct } from "@/hooks/useProduct";
 
 export const Route = createFileRoute("/solutions/$solutionId")({
   component: SolutionDetailComponent,
@@ -18,12 +17,10 @@ export const Route = createFileRoute("/solutions/$solutionId")({
 
 function SolutionDetailComponent() {
   const { solutionId } = Route.useParams();
-  const { data, loading, error, refetch } = useQuery(GET_PRODUCT_BY_ID, {
-    variables: { productId: solutionId },
-    notifyOnNetworkStatusChange: true,
-  });
 
-  if (loading) {
+  const { product, isLoading, error, refetch } = useProduct(solutionId);
+
+  if (isLoading) {
     return (
       <Section size="xl" className="text-center">
         <Container>
@@ -63,7 +60,7 @@ function SolutionDetailComponent() {
   }
 
   const mockSolution = solutionsData.find((s: any) => s.slug === solutionId);
-  const dbSolution = data?.product;
+  const dbSolution = product;
 
   const solution = dbSolution
     ? {
@@ -117,7 +114,7 @@ function SolutionDetailComponent() {
         </Container>
       </Section>
 
-      <Section size="md">
+      <Section size="md" className="bg-white/50">
         <Container>
           <div className="flex flex-col lg:flex-row items-start gap-12">
             {/* Main Content Area */}

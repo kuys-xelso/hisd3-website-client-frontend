@@ -1,10 +1,10 @@
 import { SolutionCard } from "@/components/SulotionCard";
 import { Link } from "@tanstack/react-router";
-import type { GetProductsQuery } from "@/graphql/generated/graphql";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import ButtonHero from "@/components/ButtonHero";
 import { ArrowUpRight } from "lucide-react";
+import { useProducts } from "@/hooks/useProducts";
 
 const solutionList = [
   {
@@ -41,15 +41,9 @@ const solutionList = [
   },
 ];
 
-interface FeaturedSolutionSectionProps {
-  products?: GetProductsQuery["products"];
-  isLoading?: boolean;
-}
+export const FeaturedSolutionSection = () => {
+  const { products, isLoading } = useProducts();
 
-export const FeaturedSolutionSection = ({
-  products,
-  isLoading,
-}: FeaturedSolutionSectionProps) => {
   // Use fetched products if available, otherwise fallback to static list for demonstration
   const displayList =
     products && products.length > 0
