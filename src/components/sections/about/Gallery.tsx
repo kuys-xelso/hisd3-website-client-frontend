@@ -87,7 +87,7 @@ export const Gallery = () => {
                       />
                     </div>
 
-                    {/* Bottom Caption Bar (SaaS style) */}
+                    {/* Bottom Caption Bar */}
                     <div className="p-4 bg-white">
                       <p className="text-sm font-medium text-slate-800">
                         {image.alt}

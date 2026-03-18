@@ -3,8 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Share2, AlertCircle, RefreshCcw } from "lucide-react";
-import { useQuery } from "@apollo/client/react";
-import { GET_ARTICLE_BY_ID, GET_ARTICLES } from "@/graphql/queries";
+import { useArticle } from "@/hooks/useArticle";
 import DOMPurify from "dompurify";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
@@ -17,12 +16,8 @@ export const Route = createFileRoute("/resources/$resourcesId")({
 function RouteComponent() {
   const { resourcesId } = Route.useParams();
 
-  const { data, loading, error, refetch } = useQuery(GET_ARTICLE_BY_ID, {
-    variables: { articleId: resourcesId },
-    notifyOnNetworkStatusChange: true,
-  });
-
-  const { data: articlesData } = useQuery(GET_ARTICLES);
+  const { article, relatedArticles, formattedDate, loading, error, refetch } =
+    useArticle(resourcesId);
 
   if (loading) {
     return (
@@ -63,17 +58,6 @@ function RouteComponent() {
     );
   }
 
-  const article = data?.article;
-
-  const allArticles = articlesData?.articles || [];
-
-  const relatedArticles = allArticles
-    .filter(
-      (a: any) =>
-        a.category?.name === article?.category?.name && a.id !== article?.id,
-    )
-    .slice(0, 2);
-
   if (!article) {
     return (
       <Section size="lg" className="text-center">
@@ -89,14 +73,6 @@ function RouteComponent() {
       </Section>
     );
   }
-
-  const formattedDate = article.createdAt
-    ? new Date(article.createdAt).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
 
   return (
     <Section
@@ -151,11 +127,6 @@ function RouteComponent() {
               </div>
             )}
             <div className="blog-details blog-content-body prose prose-lg dark:prose-invert max-w-none w-full break-words overflow-hidden prose-headings:text-primary prose-headings:tracking-tight prose-p:text-muted-foreground/90 prose-p:leading-relaxed">
-              {article.excerpt && (
-                <p className="text-xl text-primary/80 leading-relaxed font-medium mb-8 not-prose">
-                  {article.excerpt}
-                </p>
-              )}
               {article.content && (
                 <div
                   dangerouslySetInnerHTML={{

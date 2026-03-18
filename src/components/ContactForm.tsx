@@ -14,14 +14,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useMutation } from "@apollo/client/react";
-import { CREATE_INQUIRY } from "@/graphql/mutations";
+import { useCreateInquiry } from "@/hooks/useCreateInquiry";
 
 type Schema = z.infer<typeof formSchema>;
 
 export function ContactForm() {
-  const [createInquiry, { loading, error: mutationError }] =
-    useMutation(CREATE_INQUIRY);
+  const { submitInquiry, isLoading, error: mutationError } = useCreateInquiry();
 
   const form = useForm<Schema>({
     resolver: zodResolver(formSchema),
@@ -44,13 +42,9 @@ export function ContactForm() {
 
   const onSubmit = async (data: Schema) => {
     try {
-      await createInquiry({
-        variables: {
-          createInquiryInput: data,
-        },
-      });
+      await submitInquiry(data);
     } catch (error) {
-      console.error("Mutation error:", error);
+      console.error("Submission error:", error);
       throw error;
     }
   };
@@ -150,8 +144,8 @@ export function ContactForm() {
       )}
 
       <div className="flex justify-end">
-        <Button disabled={isSubmitting || loading}>
-          {isSubmitting || loading ? "Submitting..." : "Submit"}
+        <Button disabled={isSubmitting || isLoading}>
+          {isSubmitting || isLoading ? "Submitting..." : "Submit"}
         </Button>
       </div>
     </form>

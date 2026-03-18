@@ -93,7 +93,7 @@ function SolutionDetailComponent() {
       {/* Header Section */}
       <Section
         size="sm"
-        className="relative pt-20 pb-10 bg-gradient-to-b from-white/60 to-slate-50/60"
+        className="relative !pt-16 !pb-10 bg-gradient-to-b from-white/60 to-slate-50/60"
       >
         <Container>
           <div className="grid grid-cols-12">
@@ -106,15 +106,12 @@ function SolutionDetailComponent() {
               <h1 className="text-left text-primary text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[1.1]">
                 {solution.title}
               </h1>
-              <p className="text-xl text-primary/80 leading-relaxed font-medium max-w-3xl">
-                {solution.description}
-              </p>
             </div>
           </div>
         </Container>
       </Section>
 
-      <Section size="md" className="bg-white/50">
+      <Section size="md" className="!bg-white/50 !pt-0">
         <Container>
           <div className="flex flex-col lg:flex-row items-start gap-12">
             {/* Main Content Area */}
