@@ -64,7 +64,8 @@ export const FeaturedSolutionSection = () => {
             <span className="text-primary">Modern Healthcare</span>
           </h2>
           <p className="max-w-2xl mx-auto text-muted-foreground text-lg text-balance">
-            From independent clinics to multi-specialty hospital networks, HISD3 provides a unified ecosystem to manage every patient journey.
+            From independent clinics to multi-specialty hospital networks, HISD3
+            provides a unified ecosystem to manage every patient journey.
           </p>
         </div>
 

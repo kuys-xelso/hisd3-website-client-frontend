@@ -139,7 +139,8 @@ export const Footer = () => {
           <div className="col-span-full xl:col-span-2">
             <h3 className="font-bold text-lg">Address</h3>
             <div className="text-muted-foreground hover:text-foreground">
-              {profile?.address ?? "-"}
+              {profile?.address ??
+                "8th Floor, ACEMC-Bohol, Mansasa District, Tagbilaran City, Bohol, Philippines"}
             </div>
 
             <h3 className="font-bold text-lg mt-4">Contacts</h3>
@@ -159,7 +160,7 @@ export const Footer = () => {
                   href="tel:+639171234567"
                   className="text-muted-foreground hover:text-foreground hover:translate-x-2"
                 >
-                  -
+                  +63 917 123 4567
                 </a>
               </div>
             )}
@@ -180,7 +181,7 @@ export const Footer = () => {
                   href="mailto:info@hisd3.com"
                   className="text-muted-foreground hover:text-foreground hover:translate-x-2"
                 >
-                  -
+                  info@hisd3.com
                 </a>
               </div>
             )}

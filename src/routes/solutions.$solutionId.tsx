@@ -93,7 +93,7 @@ function SolutionDetailComponent() {
       {/* Header Section */}
       <Section
         size="sm"
-        className="relative !pt-16 !pb-10 bg-gradient-to-b from-white/60 to-slate-50/60"
+        className="relative !pt-16 !pb-8  bg-gradient-to-b from-white/60 to-slate-50/60"
       >
         <Container>
           <div className="grid grid-cols-12">
@@ -113,7 +113,7 @@ function SolutionDetailComponent() {
 
       <Section size="md" className="!bg-white/50 !pt-0">
         <Container>
-          <div className="flex flex-col lg:flex-row items-start gap-12">
+          <div className="flex flex-col-reverse lg:flex-row items-start gap-12">
             {/* Main Content Area */}
             <div className="flex-1 min-w-0">
               <div
