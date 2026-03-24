@@ -7,6 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { MeshBackground } from "@/components/layout/MeshBackground";
 
 import { apolloClient } from "../lib/apollo";
+import { BackendErrorProvider, useBackendError } from "../lib/backendErrorContext";
+import { ErrorPage } from "@/components/ErrorPage";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -36,6 +38,30 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 });
 
+function AppContent({ children }: { children: React.ReactNode }) {
+  const { hasError, clearError } = useBackendError();
+
+  if (hasError) {
+    return (
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <Navbar />
+        <main className="flex-1">
+          <ErrorPage onRetry={clearError} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative z-10 flex min-h-screen flex-col">
+      <Navbar />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </div>
+  );
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -44,15 +70,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ApolloProvider client={apolloClient}>
-          <MeshBackground />
-          <div className="relative z-10 flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <BackendErrorProvider>
+            <MeshBackground />
+            <AppContent>{children}</AppContent>
+          </BackendErrorProvider>
         </ApolloProvider>
         <Scripts />
       </body>
     </html>
   );
 }
+

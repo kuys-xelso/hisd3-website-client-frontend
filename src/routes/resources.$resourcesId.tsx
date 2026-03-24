@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Share2, AlertCircle, RefreshCcw } from "lucide-react";
+import { Share2 } from "lucide-react";
+import { ArticleSkeleton } from "@/components/ArticleSkeleton";
 import { useArticle } from "@/hooks/useArticle";
 import DOMPurify from "dompurify";
 import { Section } from "@/components/layout/Section";
@@ -16,47 +17,13 @@ export const Route = createFileRoute("/resources/$resourcesId")({
 function RouteComponent() {
   const { resourcesId } = Route.useParams();
 
-  const { article, relatedArticles, formattedDate, loading, error, refetch } =
+  const { article, relatedArticles, formattedDate, loading } =
     useArticle(resourcesId);
 
   if (loading) {
-    return (
-      <Section size="xl" className="text-center">
-        <Container>
-          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-pulse">
-            <RefreshCcw className="h-10 w-10 animate-spin mb-4 text-primary/50" />
-            <p className="text-xl font-semibold">Loading article...</p>
-          </div>
-        </Container>
-      </Section>
-    );
+    return <ArticleSkeleton />;
   }
 
-  if (error) {
-    return (
-      <Section size="lg" className="text-center">
-        <Container>
-          <div className="flex flex-col items-center justify-center py-20 border rounded-xl bg-destructive/5 border-destructive/20 mt-10">
-            <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-            <h3 className="text-2xl font-bold text-foreground mb-2">
-              Failed to load article
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              We couldn't retrieve the requested article. Please check your
-              connection and try again.
-            </p>
-            <Button
-              size="lg"
-              onClick={() => refetch()}
-              className="gap-2 rounded-full px-8"
-            >
-              <RefreshCcw className="h-5 w-5" /> Try Again
-            </Button>
-          </div>
-        </Container>
-      </Section>
-    );
-  }
 
   if (!article) {
     return (

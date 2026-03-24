@@ -12,4 +12,5 @@ export const formSchema = z.object({
         .optional()
         .or(z.literal("")),
     message: z.string().min(10, "Message must be at least 10 characters."),
+    captchaToken: z.string().min(1, "Please complete the CAPTCHA verification."),
 });

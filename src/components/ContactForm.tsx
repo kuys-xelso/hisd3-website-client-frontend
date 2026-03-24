@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Check, AlertCircle } from "lucide-react";
+import { useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   Field,
   FieldGroup,
@@ -20,6 +22,7 @@ type Schema = z.infer<typeof formSchema>;
 
 export function ContactForm() {
   const { submitInquiry, isLoading, error: mutationError } = useCreateInquiry();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const form = useForm<Schema>({
     resolver: zodResolver(formSchema),
@@ -31,10 +34,12 @@ export function ContactForm() {
       hospitalOrClinic: "",
       email: "",
       message: "",
+      captchaToken: "",
     },
   });
 
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
@@ -43,8 +48,10 @@ export function ContactForm() {
   const onSubmit = async (data: Schema) => {
     try {
       await submitInquiry(data);
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error("Submission error:", error);
+      recaptchaRef.current?.reset();
       throw error;
     }
   };
@@ -131,6 +138,22 @@ export function ContactForm() {
           <Textarea {...register("message")} placeholder="Enter your message" />
           {errors.message && <FieldError errors={[errors.message]} />}
         </Field>
+
+        {/* reCAPTCHA Widget */}
+        <div className="col-span-full flex flex-col items-center mt-2">
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""}
+            onChange={(token) => {
+              setValue("captchaToken", token || "", { shouldValidate: true });
+            }}
+          />
+          {errors.captchaToken && (
+            <div className="mt-1 w-full text-center">
+              <FieldError errors={[errors.captchaToken]} />
+            </div>
+          )}
+        </div>
       </FieldGroup>
 
       {mutationError && (
