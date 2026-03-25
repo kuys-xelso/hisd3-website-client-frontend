@@ -20,6 +20,7 @@ const config = defineConfig({
     viteReact(),
   ],
   server: {
+    allowedHosts: ["lynnette-shrewish-leopoldo.ngrok-free.dev"],
     port: 3001,
     proxy: {
       "/graphql": {
