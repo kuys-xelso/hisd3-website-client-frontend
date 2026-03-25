@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { apolloClient } from "@/lib/apollo";
+import { GET_ARTICLE_BY_ID } from "@/graphql/queries";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +13,34 @@ import { Container } from "@/components/layout/Container";
 import { FacebookIcon, XIcon, LinkedinIcon } from "@/components/Icons";
 
 export const Route = createFileRoute("/resources/$resourcesId")({
+  loader: async ({ params }) => {
+    try {
+      const { data } = await apolloClient.query({
+        query: GET_ARTICLE_BY_ID,
+        variables: { articleId: params.resourcesId },
+      });
+      return { article: data?.article };
+    } catch (e) {
+      console.error(e);
+      return { article: null };
+    }
+  },
+  head: ({ loaderData }) => {
+    const article = loaderData?.article;
+    const title = article?.title ? `${article.title} | HISD3 Resources` : 'Resource Article | HISD3';
+    const description = article?.excerpt || 'Read our latest insights, case studies, and resources.';
+    const ogImage = article?.media?.[0]?.url || 'https://github.com/shadcn.png';
+
+    return {
+      meta: [
+        { title },
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:image', content: ogImage },
+      ],
+    };
+  },
   component: RouteComponent,
 });
 
