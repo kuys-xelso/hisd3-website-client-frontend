@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { apolloClient } from "@/lib/apollo";
+import { GET_PRODUCT_BY_ID } from "@/graphql/queries";
 import { solutionsData } from "@/components/sections/solutions/solutionsData";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
@@ -13,6 +15,34 @@ import { useProduct } from "@/hooks/useProduct";
 import { SolutionDetailSkeleton } from "@/components/sections/solutions/SolutionDetailSkeleton";
 
 export const Route = createFileRoute("/solutions/$solutionId")({
+  loader: async ({ params }) => {
+    try {
+      const { data } = await apolloClient.query({
+        query: GET_PRODUCT_BY_ID,
+        variables: { productId: params.solutionId },
+      });
+      return { product: data?.product };
+    } catch (e) {
+      console.error(e);
+      return { product: null };
+    }
+  },
+  head: ({ loaderData }) => {
+    const product = loaderData?.product;
+    const title = product?.name ? `${product.name} | HISD3 Solutions` : 'Solution | HISD3';
+    const description = product?.tagline || 'Explore our HISD3 solutions designed for modern healthcare.';
+    const ogImage = product?.media?.[0]?.url || 'https://github.com/shadcn.png';
+
+    return {
+      meta: [
+        { title },
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:image', content: ogImage },
+      ],
+    };
+  },
   component: SolutionDetailComponent,
 });
 
@@ -116,7 +146,7 @@ function SolutionDetailComponent() {
               <div className="p-2 border border-border rounded-2xl bg-card/50">
                 <img
                   src={solution.icon}
-                  alt=""
+                  alt={`${solution.title} icon`}
                   className="group-hover:scale-[1.02] duration-200 border border-border rounded-xl w-full h-full object-contain"
                 />
               </div>
