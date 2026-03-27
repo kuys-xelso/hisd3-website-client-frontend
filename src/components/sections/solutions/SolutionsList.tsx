@@ -43,13 +43,11 @@ export const SolutionsList = () => {
         <div className="flex flex-wrap justify-center gap-8">
           {isLoading
             ? Array.from({ length: 6 }).map((_, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)]"
                 >
-                  <Card
-                    className="flex flex-col h-full animate-pulse border-slate-100"
-                  >
+                  <Card className="flex flex-col h-full animate-pulse border-slate-100">
                     <CardHeader className="flex flex-col items-center text-center">
                       <div className="w-16 h-16 rounded-2xl bg-slate-200 mb-4" />
                       <div className="h-7 w-3/4 bg-slate-200 rounded" />
@@ -63,8 +61,8 @@ export const SolutionsList = () => {
                 </div>
               ))
             : displayList.map((solution: any, index: number) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)]"
                 >
                   <SolutionCard

@@ -7,14 +7,18 @@ import { Container } from "@/components/layout/Container";
 interface ErrorPageProps {
   title?: string;
   description?: string;
+  error?: Error | null;
   onRetry?: () => void;
 }
 
 export const ErrorPage = ({
   title = "Something went wrong",
   description = "We couldn't connect to the server. Please check your connection and try again.",
+  error,
   onRetry,
 }: ErrorPageProps) => {
+  const displayMessage = error?.message || description;
+
   return (
     <Section size="lg">
       <Container>
@@ -28,7 +32,7 @@ export const ErrorPage = ({
           </h1>
 
           <p className="text-muted-foreground text-base leading-relaxed mb-10">
-            {description}
+            {displayMessage}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 items-center">

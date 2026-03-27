@@ -1,14 +1,14 @@
 import { createContext, useContext, useState, useCallback } from "react";
 
 interface BackendErrorContextValue {
-  hasError: boolean;
-  setHasError: (value: boolean) => void;
+  error: Error | null;
+  setError: (error: Error | null) => void;
   clearError: () => void;
 }
 
 const BackendErrorContext = createContext<BackendErrorContextValue>({
-  hasError: false,
-  setHasError: () => {},
+  error: null,
+  setError: () => {},
   clearError: () => {},
 });
 
@@ -16,16 +16,16 @@ export const useBackendError = () => useContext(BackendErrorContext);
 
 // Module-level callback registered by the provider so Apollo (a singleton)
 // can call it without a direct React dependency
-let _globalErrorSetter: ((value: boolean) => void) | null = null;
+let _globalErrorSetter: ((error: Error | null) => void) | null = null;
 
 export const registerGlobalErrorSetter = (
-  fn: (value: boolean) => void
+  fn: (error: Error | null) => void
 ) => {
   _globalErrorSetter = fn;
 };
 
-export const triggerGlobalError = () => {
-  _globalErrorSetter?.(true);
+export const triggerGlobalError = (error: Error) => {
+  _globalErrorSetter?.(error);
 };
 
 export const BackendErrorProvider = ({
@@ -33,22 +33,22 @@ export const BackendErrorProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  const stableSetHasError = useCallback((value: boolean) => {
-    setHasError(value);
-    registerGlobalErrorSetter(stableSetHasError);
+  const stableSetError = useCallback((newError: Error | null) => {
+    setError(newError);
+    registerGlobalErrorSetter(stableSetError);
   }, []);
 
   // Register setter on mount so Apollo link can access it
-  registerGlobalErrorSetter(stableSetHasError);
+  registerGlobalErrorSetter(stableSetError);
 
   const clearError = useCallback(() => {
-    setHasError(false);
+    setError(null);
   }, []);
 
   return (
-    <BackendErrorContext.Provider value={{ hasError, setHasError: stableSetHasError, clearError }}>
+    <BackendErrorContext.Provider value={{ error, setError: stableSetError, clearError }}>
       {children}
     </BackendErrorContext.Provider>
   );
