@@ -27,19 +27,29 @@ export const Route = createFileRoute("/solutions/$solutionId")({
       return { product: null };
     }
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const product = loaderData?.product;
     const title = product?.name ? `${product.name} | HISD3 Solutions` : 'Solution | HISD3';
     const description = product?.tagline || 'Explore our HISD3 solutions designed for modern healthcare.';
-    const ogImage = product?.media?.[0]?.url || 'https://github.com/shadcn.png';
+    const currentUrl = `https://hisd3-web-frontend.vercel.app/solutions/${params.solutionId}`;
+    const rawImage = product?.media?.[0]?.url;
+    const ogImage = rawImage 
+      ? (rawImage.startsWith('http') ? rawImage : `https://hisd3-web-frontend.vercel.app${rawImage}`) 
+      : 'https://github.com/shadcn.png';
 
     return {
       meta: [
         { title },
         { name: 'description', content: description },
+        { property: 'og:type', content: 'article' },
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: currentUrl },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: ogImage },
       ],
     };
   },

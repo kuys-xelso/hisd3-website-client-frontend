@@ -25,19 +25,29 @@ export const Route = createFileRoute("/resources/$resourcesId")({
       return { article: null };
     }
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const article = loaderData?.article;
     const title = article?.title ? `${article.title} | HISD3 Resources` : 'Resource Article | HISD3';
     const description = article?.excerpt || 'Read our latest insights, case studies, and resources.';
-    const ogImage = article?.media?.[0]?.url || 'https://github.com/shadcn.png';
+    const currentUrl = `https://hisd3-web-frontend.vercel.app/resources/${params.resourcesId}`;
+    const rawImage = article?.media?.[0]?.url;
+    const ogImage = rawImage 
+      ? (rawImage.startsWith('http') ? rawImage : `https://hisd3-web-frontend.vercel.app${rawImage}`) 
+      : 'https://github.com/shadcn.png';
 
     return {
       meta: [
         { title },
         { name: 'description', content: description },
+        { property: 'og:type', content: 'article' },
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:image', content: ogImage },
+        { property: 'og:url', content: currentUrl },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: ogImage },
       ],
     };
   },
